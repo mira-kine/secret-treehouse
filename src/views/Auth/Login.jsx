@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Redirect, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useForm } from '../../hooks/useForm';
 import styles from './Login.css';
@@ -18,7 +18,6 @@ export default function Login() {
   const handleLogin = (event) => {
     event.preventDefault();
     const loginWasSuccessful = auth.login(formState.email, formState.password);
-    console.log('loginWasSuccessful', loginWasSuccessful);
     {
       loginWasSuccessful
         ? history.replace(from.pathname)
@@ -37,20 +36,24 @@ export default function Login() {
     <>
       <h3>You must log in to view the page at {from.pathname}</h3>
       <form onSubmit={handleLogin} className={styles.loginForm}>
-        <label>Email</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          onChange={handleFormChange}
-        />
-        <label>Password</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          onChange={handleFormChange}
-        />
+        <label>
+          Email
+          <input
+            id="email"
+            name="email"
+            type="email"
+            onChange={handleFormChange}
+          />
+        </label>
+        <label>
+          Password
+          <input
+            id="password"
+            name="password"
+            type="password"
+            onChange={handleFormChange}
+          />
+        </label>
         <button type="submit" aria-label="Sign In">
           Sign in
         </button>
