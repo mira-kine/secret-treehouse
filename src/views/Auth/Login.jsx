@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useForm } from '../../hooks/useForm';
 import styles from './Login.css';
@@ -18,7 +18,12 @@ export default function Login() {
   const handleLogin = (event) => {
     event.preventDefault();
     const loginWasSuccessful = auth.login(formState.email, formState.password);
-
+    console.log('loginWasSuccessful', loginWasSuccessful);
+    {
+      loginWasSuccessful
+        ? history.replace(from.pathname)
+        : setError('log in was unsuccessful, try again');
+    }
     // TODO: If login was unsuccessful, set an error with a message
     // to display to the user that their login failed.
     //
@@ -37,12 +42,14 @@ export default function Login() {
           id="email"
           name="email"
           type="email"
-        />{' '}
+          onChange={handleFormChange}
+        />
         <label>Password</label>
         <input
           id="password"
           name="password"
           type="password"
+          onChange={handleFormChange}
         />
         <button type="submit" aria-label="Sign In">
           Sign in
